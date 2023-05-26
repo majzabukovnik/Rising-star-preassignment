@@ -6,10 +6,11 @@ if (isset($_POST['start_d']) && validator()) {
     $priceData = getPriceData();
 
     $data = [];
-    for($i = $startValue; $i <= $endValue; $i++){
+    for ($i = $startValue; $i <= $endValue; $i++) {
         $data[sizeof($data)] = $priceData[$i];
     }
-    var_dump(findLongestDownwardTrend($data));
+
+    $longestTrend = findLongestDownwardTrend($data);
 }
 
 /**
@@ -47,11 +48,13 @@ function findLongestDownwardTrend(array $data): int
  * @param string $end
  * @return array
  */
-function getPriceData(string $coin = 'bitcoin', string $fiat = 'eur', string $start = '1577836800', string $end = '1609376400'): array{
+function getPriceData(string $coin = 'bitcoin', string $fiat = 'eur', string $start = '1577836800', string $end = '1609376400'): array
+{
     $api_url = 'https://api.coingecko.com/api/v3/coins/' . $coin . '/market_chart/range?vs_currency=' . $fiat . '&from=' . $start . '&to=' . $end;
     $rawData = file_get_contents($api_url);
     return json_decode($rawData, true)['prices'];
 }
+
 /**
  * function for validating user input
  *
@@ -78,10 +81,12 @@ function validator(): bool
  * @param string $date
  * @return float
  */
-function dateCalculator(string $date): float{
+function dateCalculator(string $date): float
+{
     $unixDate = strtotime($date);
     return ($unixDate - strtotime('2020-1-1')) / 86400;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -99,8 +104,10 @@ function dateCalculator(string $date): float{
     <label for="end_d">Enter the ending date</label><br>
     <input type="date" name="end_d" min="2020-01-01" max="2020-12-31"><br><br>
 
-
     <button type="submit">Submit</button>
 </form>
+<?php
+echo '<p>The longest bearish movement within selected range was ' . $longestTrend . ' day(s)</p>'
+?>
 </body>
 </html>
