@@ -28,17 +28,18 @@ function findLongestDownwardTrend(array $data): int
 /**
  * function for getting filtered data from api
  *
+ * @param string $mode
  * @param string $coin
  * @param string $fiat
  * @param string $start
  * @param string $end
  * @return array
  */
-function getPriceData(string $coin = 'bitcoin', string $fiat = 'eur', string $start = '1577836800', string $end = '1609376400'): array
+function getSpecifiedData(string $mode, string $coin = 'bitcoin', string $fiat = 'eur', string $start = '1577836800', string $end = '1609376400'): array
 {
     $api_url = 'https://api.coingecko.com/api/v3/coins/' . $coin . '/market_chart/range?vs_currency=' . $fiat . '&from=' . $start . '&to=' . $end;
     $rawData = file_get_contents($api_url);
-    return json_decode($rawData, true)['prices'];
+    return json_decode($rawData, true)[$mode];
 }
 
 /**
