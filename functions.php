@@ -2,8 +2,8 @@
 /**
  * function for finding the longest downward trend
  *
- * @param $data
- * @return array
+ * @param array $data
+ * @return int
  */
 function findLongestDownwardTrend(array $data): int
 {
@@ -105,13 +105,13 @@ function findTheBestDaysToBuySell(array $priceData): array
  */
 function getHighestVolumen(array $tradingVolume): array
 {
-    $highestvolume = 0;
-    foreach ($tradingVolume as $daydata) {
-        if ($daydata[1] > $highestvolume) {
-            $highestvolume = $daydata[1];
-            var_dump($daydata[0]);
-            $date = date("d-m-Y", $daydata[0] / 1000);
+    $highestVolume = 0;
+    foreach ($tradingVolume as $dayData) {
+        if ($dayData[1] > $highestVolume) {
+            $highestVolume = $dayData[1];
+            var_dump($dayData[0]);
+            $date = date("d-m-Y", $dayData[0] / 1000);
         }
     }
-    return ["date" => $date, "volume" => $highestvolume];
+    return ["date" => $date, "volume" => $highestVolume];
 }
