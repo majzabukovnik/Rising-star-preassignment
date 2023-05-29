@@ -82,15 +82,15 @@ function dateCalculator(string $date): float
  */
 function findTheBestDaysToBuySell(array $priceData): array
 {
-    $highestPrice = ['price' => $priceData[0][1], 'date' => $priceData[0][0]];
-    $lowestPrice = ['price' => $priceData[0][1], 'date' => $priceData[0][0]];
+    $highestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
+    $lowestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
 
     foreach ($priceData as $dayData) {
         if ($dayData[1] > $highestPrice) {
-            $highestPrice['date'] = $dayData[0];
+            $highestPrice['date'] = date("d-m-Y", $dayData[0] / 1000);
             $highestPrice['price'] = $dayData[1];
         } else if ($dayData[1] < $lowestPrice) {
-            $lowestPrice['date'] = $dayData[0];
+            $lowestPrice['date'] = date("d-m-Y", $dayData[0] / 1000);
             $lowestPrice['price'] = $dayData[1];
         }
     }
