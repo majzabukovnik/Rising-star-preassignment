@@ -2,6 +2,7 @@
 require_once __DIR__ . '/functions.php';
 
 if (isset($_POST['start_d']) && validator()) {
+    $output = [];
     $startValue = dateCalculator($_POST['start_d']);
     $endValue = dateCalculator($_POST['end_d']);
 
@@ -12,11 +13,11 @@ if (isset($_POST['start_d']) && validator()) {
             $data[sizeof($data)] = $priceData[$i];
         }
 
-        $longestTrend = findLongestDownwardTrend($data);
+        $output['longestTrend'] = findLongestDownwardTrend($data);
     }
     else if (isset($_POST['mode']) && $_POST['mode'] === 'highestTrading'){
         $volumenData = getSpecifiedData('total_volumes');
-        getHighestVolumen($volumenData);
+        $output['highestTrading'] = getHighestVolumen($volumenData);
     }
 
 }
