@@ -13,11 +13,13 @@ if (isset($_POST['start_d']) && validator()) {
             $data[sizeof($data)] = $priceData[$i];
         }
 
-        $output['longestTrend'] = findLongestDownwardTrend($data);
+        $output['longestTrend'] = 'The longest bearish trend lasted ' . findLongestDownwardTrend($data) . ' day(s).';
     }
     else if (isset($_POST['mode']) && $_POST['mode'] === 'highestTrading'){
         $volumenData = getSpecifiedData('total_volumes');
-        $output['highestTrading'] = getHighestVolumen($volumenData);
+        $dayData = getHighestVolumen($volumenData);
+        var_dump($dayData);
+        $output['highestTrading'] = 'The highest trading volume was ' . $dayData['volume'] . ' on ' . $dayData['date'];
     }
 
 }
