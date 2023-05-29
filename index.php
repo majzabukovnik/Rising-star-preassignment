@@ -7,7 +7,7 @@ if (isset($_POST['start_d']) && validator()) {
     $endValue = dateCalculator($_POST['end_d']);
 
     foreach ($_POST['mode'] as $value){
-        if(isset($_POST['mode']) && $value === 'bearishMovement'){
+        if($value === 'bearishMovement'){
             $priceData = getSpecifiedData('prices');
             $data = [];
             for ($i = $startValue; $i <= $endValue; $i++) {
@@ -16,7 +16,7 @@ if (isset($_POST['start_d']) && validator()) {
 
             $output['longestTrend'] = 'The longest bearish trend lasted ' . findLongestDownwardTrend($data) . ' day(s).';
         }
-        else if (isset($_POST['mode']) && $value === 'highestTrading'){
+        else if($value === 'highestTrading'){
             $volumenData = getSpecifiedData('total_volumes');
             $dayData = getHighestVolumen($volumenData);
             $output['highestTrading'] = 'The highest trading volume was ' . $dayData['volume'] . ' on ' . $dayData['date'];
