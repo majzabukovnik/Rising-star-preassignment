@@ -24,7 +24,15 @@ if (isset($_POST['start_d']) && validator()) {
 
         else if($value === 'greatDeal'){
             $priceData = getSpecifiedData('prices');
-            $output['greatDeal'] = findTheBestDaysToBuySell($priceData);
+            $data = [];
+            for ($i = $startValue; $i <= $endValue; $i++) {
+                $data[sizeof($data)] = $priceData[$i];
+            }
+
+            $bestBuySellDays = findTheBestDaysToBuySell($data);
+            $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['buy']['date'] . ' when price was ' .
+            $bestBuySellDays['buy']['price'] . '. The best day for selling was on ' . $bestBuySellDays['sell']['date'] .
+            ' when price was ' . $bestBuySellDays['sell']['price'] . '.';
         }
     }
 } ?>
