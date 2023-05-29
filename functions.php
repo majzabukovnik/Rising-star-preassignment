@@ -73,19 +73,36 @@ function dateCalculator(string $date): float
     $unixDate = strtotime($date);
     return ($unixDate - strtotime('2020-1-1')) / 86400;
 }
-function findTheBestDaysToBuySell(array $priceData): array{
 
+function findTheBestDaysToBuySell(array $priceData): array
+{
+    $highestPrice = $priceData[0][1];
+    $lowestPrice = $priceData[0][1];
+    foreach ($priceData as $dayData) {
+        if ($dayData[1] > $highestPrice) {
+            $highestPrice = $dayData[1];
+        } else if ($dayData[1] < $lowestPrice) {
+            $lowestPrice = $dayData[1];
+        }
+    }
     return [];
 }
 
+/**
+ * function for finding the highest volume
+ *
+ * @param array $tradingVolume
+ * @return array
+ */
 function getHighestVolumen(array $tradingVolume): array
 {
-   $highestvolume = 0;
-   foreach ($tradingVolume as $daydata){
-    if($daydata[1] > $highestvolume ){
-        $highestvolume = $daydata[1];
-        $date = date("Y-m-d", strtotime("@". $daydata [0]));
+    $highestvolume = 0;
+    foreach ($tradingVolume as $daydata) {
+        if ($daydata[1] > $highestvolume) {
+            $highestvolume = $daydata[1];
+            var_dump($daydata[0]);
+            $date = date("d-m-Y", $daydata[0] / 1000);
+        }
     }
-   }
-   return ["date" => $date, "volume" => $highestvolume ];
+    return ["date" => $date, "volume" => $highestvolume];
 }

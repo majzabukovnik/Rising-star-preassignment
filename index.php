@@ -19,7 +19,7 @@ if (isset($_POST['start_d']) && validator()) {
         else if($value === 'highestTrading'){
             $volumenData = getSpecifiedData('total_volumes');
             $dayData = getHighestVolumen($volumenData);
-            $output['highestTrading'] = 'The highest trading volume was ' . $dayData['volume'] . ' on ' . $dayData['date'];
+            $output['highestTrading'] = 'The highest trading volume was ' . $dayData['volume'] . ' on ' . $dayData['date'] . '.';
         }
 
         else if($value === 'greatDeal'){
@@ -27,8 +27,7 @@ if (isset($_POST['start_d']) && validator()) {
             $output['greatDeal'] = findTheBestDaysToBuySell($priceData);
         }
     }
-}
-?>
+} ?>
 
 <!DOCTYPE html>
 <html>
