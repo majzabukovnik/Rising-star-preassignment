@@ -47,8 +47,6 @@ if (isset($_POST['start_d']) && validator()) {
 
     <button type="submit">Submit</button>
 </form>
-<?php
-echo '<p>The longest bearish movement within selected range was ' . $longestTrend . ' day(s)</p>'
-?>
+<?php require_once __DIR__ . '/views/partials/dataDisplay.php'; ?>
 </body>
 </html>
