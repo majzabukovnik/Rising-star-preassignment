@@ -73,6 +73,10 @@ function dateCalculator(string $date): float
     $unixDate = strtotime($date);
     return ($unixDate - strtotime('2020-1-1')) / 86400;
 }
+function findTheBestDaysToBuySell(array $priceData): array{
+
+    return [];
+}
 
 function getHighestVolumen(array $tradingVolume): array
 {
