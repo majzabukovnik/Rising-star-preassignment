@@ -74,18 +74,27 @@ function dateCalculator(string $date): float
     return ($unixDate - strtotime('2020-1-1')) / 86400;
 }
 
+/**
+ * function for finding the best day to buy and sell crypto
+ *
+ * @param array $priceData
+ * @return array
+ */
 function findTheBestDaysToBuySell(array $priceData): array
 {
-    $highestPrice = $priceData[0][1];
-    $lowestPrice = $priceData[0][1];
+    $highestPrice = ['price' => $priceData[0][1], 'date' => $priceData[0][0]];
+    $lowestPrice = ['price' => $priceData[0][1], 'date' => $priceData[0][0]];
+
     foreach ($priceData as $dayData) {
         if ($dayData[1] > $highestPrice) {
-            $highestPrice = $dayData[1];
+            $highestPrice['date'] = $dayData[0];
+            $highestPrice['price'] = $dayData[1];
         } else if ($dayData[1] < $lowestPrice) {
-            $lowestPrice = $dayData[1];
+            $lowestPrice['date'] = $dayData[0];
+            $lowestPrice['price'] = $dayData[1];
         }
     }
-    return [];
+    return ['buy' => $highestPrice, 'sell' => $lowestPrice];
 }
 
 /**
