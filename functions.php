@@ -73,3 +73,15 @@ function dateCalculator(string $date): float
     $unixDate = strtotime($date);
     return ($unixDate - strtotime('2020-1-1')) / 86400;
 }
+
+function getHighestVolumen(array $tradingVolume): array
+{
+   $highestvolume = 0;
+   foreach ($tradingVolume as $daydata){
+    if($daydata[1] > $highestvolume ){
+        $highestvolume = $daydata[1];
+        $date = date("Y-m-d", strtotime("@". $daydata [0]));
+    }
+   }
+   return ["date" => $date, "volume" => $highestvolume ];
+}
