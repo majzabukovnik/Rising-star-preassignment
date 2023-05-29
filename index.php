@@ -29,6 +29,7 @@ if (isset($_POST['start_d']) && validator()) {
 <html>
 <head>
     <title>First page</title>
+    <link rel="stylesheet" type="text/css" href="views/css/main.css">
 </head>
 <body>
 <h1>Enter selected date range</h1>
