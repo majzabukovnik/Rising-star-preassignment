@@ -21,31 +21,18 @@ class IndexController
 
         foreach ($_POST['mode'] as $value){
             if($value === 'bearishMovement'){
-                $priceData = getSpecifiedData('prices');
-                $data = [];
-                for ($i = $startValue; $i <= $endValue; $i++) {
-                    $data[sizeof($data)] = $priceData[$i];
-                }
+                $data = $this->filterArrayByDate(getSpecifiedData('prices'), $startValue, $endValue);
                 $output['longestTrend'] = 'The longest bearish trend lasted ' . findLongestDownwardTrend($data) . ' day(s).';
             }
 
             else if($value === 'highestTrading'){
-                $volumenData = getSpecifiedData('total_volumes');
-                $data = [];
-                for ($i = $startValue; $i <= $endValue; $i++) {
-                    $data[sizeof($data)] = $volumenData[$i];
-                }
+                $data = $this->filterArrayByDate(getSpecifiedData('total_volumes'), $startValue, $endValue);
                 $dayData = getHighestVolumen($data);
                 $output['highestTrading'] = 'The highest trading volume was ' . $dayData['volume'] . ' EUR on ' . $dayData['date'] . '.';
             }
 
             else if($value === 'greatDeal'){
-                $priceData = getSpecifiedData('prices');
-                $data = [];
-                for ($i = $startValue; $i <= $endValue; $i++) {
-                    $data[sizeof($data)] = $priceData[$i];
-                }
-
+                $data = $this->filterArrayByDate(getSpecifiedData('prices'), $startValue, $endValue);
                 $bestBuySellDays = findTheBestDaysToBuySell($data);
                 $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['buy']['date'] . ' when price was ' .
                     $bestBuySellDays['buy']['price'] . ' EUR. The best day for selling was on ' . $bestBuySellDays['sell']['date'] .
@@ -56,5 +43,13 @@ class IndexController
         view('view/index/index', [
             'output' => $output
         ]);
+    }
+
+    private function filterArrayByDate(array $arrayToFilter, float $startValue, float $endValue): array{
+        $data = [];
+        for ($i = $startValue; $i <= $endValue; $i++) {
+            $data[sizeof($data)] = $arrayToFilter[$i];
+        }
+        return $data;
     }
 }
