@@ -110,7 +110,6 @@ function getHighestVolumen(array $tradingVolume): array
     foreach ($tradingVolume as $dayData) {
         if ($dayData[1] > $highestVolume) {
             $highestVolume = $dayData[1];
-            var_dump($dayData[0]);
             $date = date("d-m-Y", $dayData[0] / 1000);
         }
     }
