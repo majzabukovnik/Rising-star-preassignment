@@ -26,6 +26,7 @@
     <?php view('views/partials/dataDisplay' , [
         'output' => $output
     ]); ?>
+
 </form>
 
 </body>
