@@ -33,9 +33,17 @@ if (isset($_POST['start_d']) && validator()) {
             }
 
             $bestBuySellDays = findTheBestDaysToBuySell($data);
-            $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['buy']['date'] . ' when price was ' .
-                $bestBuySellDays['buy']['price'] . ' EUR. The best day for selling was on ' . $bestBuySellDays['sell']['date'] .
-                ' when price was ' . $bestBuySellDays['sell']['price'] . ' EUR.';
+            $outputExtension = '<b>Thus you should buy LONG!</b>';
+            if ($bestBuySellDays['buy']['date'] > $bestBuySellDays['sell']['date']) {
+                $outputExtension = '<b>Thus you should buy SHORT!</b>';
+                $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['sell']['date'] . ' when price was ' .
+                    $bestBuySellDays['sell']['price'] . ' EUR. The best day for selling was on ' . $bestBuySellDays['buy']['date'] .
+                    ' when price was ' . $bestBuySellDays['buy']['price'] . ' EUR. ' . $outputExtension;
+            } else {
+                $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['buy']['date'] . ' when price was ' .
+                    $bestBuySellDays['buy']['price'] . ' EUR. The best day for selling was on ' . $bestBuySellDays['sell']['date'] .
+                    ' when price was ' . $bestBuySellDays['sell']['price'] . ' EUR. ' . $outputExtension;
+            }
         }
     }
 } ?>
