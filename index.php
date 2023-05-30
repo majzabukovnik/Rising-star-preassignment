@@ -34,7 +34,7 @@ if (isset($_POST['start_d']) && validator()) {
 
             $bestBuySellDays = findTheBestDaysToBuySell($data);
             $outputExtension = '<b>Thus you should buy LONG!</b>';
-            if ($bestBuySellDays['buy']['date'] > $bestBuySellDays['sell']['date']) {
+            if (strtotime($bestBuySellDays['buy']['date']) > strtotime($bestBuySellDays['sell']['date'])) {
                 $outputExtension = '<b>Thus you should buy SHORT!</b>';
                 $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['sell']['date'] . ' when price was ' .
                     $bestBuySellDays['sell']['price'] . ' EUR. The best day for selling was on ' . $bestBuySellDays['buy']['date'] .
