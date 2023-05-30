@@ -35,8 +35,8 @@ if (isset($_POST['start_d']) && validator()) {
 
             $bestBuySellDays = findTheBestDaysToBuySell($data);
             $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['buy']['date'] . ' when price was ' .
-            $bestBuySellDays['buy']['price'] . '. The best day for selling was on ' . $bestBuySellDays['sell']['date'] .
-            ' when price was ' . $bestBuySellDays['sell']['price'] . '.';
+            $bestBuySellDays['buy']['price'] . ' EUR. The best day for selling was on ' . $bestBuySellDays['sell']['date'] .
+            ' when price was ' . $bestBuySellDays['sell']['price'] . ' EUR.';
         }
     }
 } ?>
@@ -66,7 +66,10 @@ if (isset($_POST['start_d']) && validator()) {
 
     <button type="submit" class="majmun">Submit</button>
 
-    <?php require_once __DIR__ . '/views/partials/dataDisplay.php'; ?>
+    <?php view('views/partials/dataDisplay' , [
+            'output' => $output
+    ]); ?>
+    
 </form>
 
 </body>

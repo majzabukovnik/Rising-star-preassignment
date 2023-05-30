@@ -1,4 +1,20 @@
 <?php
+const BASE_PATH = __DIR__ . '/';
+
+/**
+ * function for easier requiring off files
+ *
+ * @param string $path
+ * @param array $attributes
+ * @return void
+ */
+function view(string $path, array $attributes = []): void
+{
+    extract($attributes);
+
+    require_once BASE_PATH . $path . '.php';
+}
+
 /**
  * function for finding the longest downward trend
  *
@@ -83,16 +99,16 @@ function dateCalculator(string $date): float
 function findTheBestDaysToBuySell(array $priceData): array
 {
     //TODO: fix this so it works like it should
-    $highestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
-    $lowestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
+    $highestPrice = ['price' => round($priceData[0][1], 2), 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
+    $lowestPrice = ['price' => round($priceData[0][1], 2), 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
 
     foreach ($priceData as $dayData) {
         if ($dayData[1] > $highestPrice) {
             $highestPrice['date'] = date("d-m-Y", $dayData[0] / 1000);
-            $highestPrice['price'] = $dayData[1];
+            $highestPrice['price'] = round($dayData[1], 2);
         } else if ($dayData[1] < $lowestPrice) {
             $lowestPrice['date'] = date("d-m-Y", $dayData[0] / 1000);
-            $lowestPrice['price'] = $dayData[1];
+            $lowestPrice['price'] = round($dayData[1], 2);
         }
     }
     return ['buy' => $highestPrice, 'sell' => $lowestPrice];
