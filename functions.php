@@ -82,6 +82,7 @@ function dateCalculator(string $date): float
  */
 function findTheBestDaysToBuySell(array $priceData): array
 {
+    //TODO: fix this so it works like it should
     $highestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
     $lowestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
 
