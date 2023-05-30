@@ -65,7 +65,9 @@ if (isset($_POST['start_d']) && validator()) {
     <label for="vehicle3">Get the best days to buy and sell</label><br><br>
 
     <button type="submit" class="majmun">Submit</button>
+
+    <?php require_once __DIR__ . '/views/partials/dataDisplay.php'; ?>
 </form>
-<?php require_once __DIR__ . '/views/partials/dataDisplay.php'; ?>
+
 </body>
 </html>
