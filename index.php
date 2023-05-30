@@ -6,24 +6,40 @@ if (isset($_POST['start_d']) && validator()) {
     $startValue = dateCalculator($_POST['start_d']);
     $endValue = dateCalculator($_POST['end_d']);
 
-    if(isset($_POST['mode']) && $_POST['mode'] === 'bearishMovement'){
-        $priceData = getSpecifiedData('prices');
-        $data = [];
-        for ($i = $startValue; $i <= $endValue; $i++) {
-            $data[sizeof($data)] = $priceData[$i];
+    foreach ($_POST['mode'] as $value){
+        if($value === 'bearishMovement'){
+            $priceData = getSpecifiedData('prices');
+            $data = [];
+            for ($i = $startValue; $i <= $endValue; $i++) {
+                $data[sizeof($data)] = $priceData[$i];
+            }
+            $output['longestTrend'] = 'The longest bearish trend lasted ' . findLongestDownwardTrend($data) . ' day(s).';
         }
 
-        $output['longestTrend'] = 'The longest bearish trend lasted ' . findLongestDownwardTrend($data) . ' day(s).';
-    }
-    else if (isset($_POST['mode']) && $_POST['mode'] === 'highestTrading'){
-        $volumenData = getSpecifiedData('total_volumes');
-        $dayData = getHighestVolumen($volumenData);
-        var_dump($dayData);
-        $output['highestTrading'] = 'The highest trading volume was ' . $dayData['volume'] . ' on ' . $dayData['date'];
-    }
+        else if($value === 'highestTrading'){
+            $volumenData = getSpecifiedData('total_volumes');
+            $data = [];
+            for ($i = $startValue; $i <= $endValue; $i++) {
+                $data[sizeof($data)] = $volumenData[$i];
+            }
+            $dayData = getHighestVolumen($data);
+            $output['highestTrading'] = 'The highest trading volume was ' . $dayData['volume'] . ' EUR on ' . $dayData['date'] . '.';
+        }
 
-}
-?>
+        else if($value === 'greatDeal'){
+            $priceData = getSpecifiedData('prices');
+            $data = [];
+            for ($i = $startValue; $i <= $endValue; $i++) {
+                $data[sizeof($data)] = $priceData[$i];
+            }
+
+            $bestBuySellDays = findTheBestDaysToBuySell($data);
+            $output['greatDeal'] = 'The best day for buying was on ' . $bestBuySellDays['buy']['date'] . ' when price was ' .
+            $bestBuySellDays['buy']['price'] . '. The best day for selling was on ' . $bestBuySellDays['sell']['date'] .
+            ' when price was ' . $bestBuySellDays['sell']['price'] . '.';
+        }
+    }
+} ?>
 
 <!DOCTYPE html>
 <html>
@@ -41,12 +57,12 @@ if (isset($_POST['start_d']) && validator()) {
     <label for="end_d">Enter the ending date</label><br>
     <input type="date" name="end_d" min="2020-01-01" max="2020-12-31"><br><br>
 
-    <input type="checkbox" id="bearishMovement" name="mode" value="bearishMovement">
+    <input type="checkbox" id="bearishMovement" name="mode[]" value="bearishMovement">
     <label for="vehicle1">Get bearish movement</label><br>
-    <input type="checkbox" id="highestTrading" name="mode" value="highestTrading">
+    <input type="checkbox" id="highestTrading" name="mode[]" value="highestTrading">
     <label for="vehicle2">Get highest trading volumen</label><br>
-    <input type="checkbox" id="greatDeal" name="mode" value="greatDeal">
-    <label for="vehicle3">Get the best days to buy and sell</label><br>
+    <input type="checkbox" id="greatDeal" name="mode[]" value="greatDeal">
+    <label for="vehicle3">Get the best days to buy and sell</label><br><br>
 
     <button type="submit">Submit</button>
 </form>

@@ -2,8 +2,8 @@
 /**
  * function for finding the longest downward trend
  *
- * @param $data
- * @return array
+ * @param array $data
+ * @return int
  */
 function findLongestDownwardTrend(array $data): int
 {
@@ -74,14 +74,44 @@ function dateCalculator(string $date): float
     return ($unixDate - strtotime('2020-1-1')) / 86400;
 }
 
+/**
+ * function for finding the best day to buy and sell crypto
+ *
+ * @param array $priceData
+ * @return array
+ */
+function findTheBestDaysToBuySell(array $priceData): array
+{
+    //TODO: fix this so it works like it should
+    $highestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
+    $lowestPrice = ['price' => $priceData[0][1], 'date' => date("d-m-Y", $priceData[0][0] / 1000)];
+
+    foreach ($priceData as $dayData) {
+        if ($dayData[1] > $highestPrice) {
+            $highestPrice['date'] = date("d-m-Y", $dayData[0] / 1000);
+            $highestPrice['price'] = $dayData[1];
+        } else if ($dayData[1] < $lowestPrice) {
+            $lowestPrice['date'] = date("d-m-Y", $dayData[0] / 1000);
+            $lowestPrice['price'] = $dayData[1];
+        }
+    }
+    return ['buy' => $highestPrice, 'sell' => $lowestPrice];
+}
+
+/**
+ * function for finding the highest volume
+ *
+ * @param array $tradingVolume
+ * @return array
+ */
 function getHighestVolumen(array $tradingVolume): array
 {
-   $highestvolume = 0;
-   foreach ($tradingVolume as $daydata){
-    if($daydata[1] > $highestvolume ){
-        $highestvolume = $daydata[1];
-        $date = date("Y-m-d", strtotime("@". $daydata [0]));
+    $highestVolume = 0;
+    foreach ($tradingVolume as $dayData) {
+        if ($dayData[1] > $highestVolume) {
+            $highestVolume = $dayData[1];
+            $date = date("d-m-Y", $dayData[0] / 1000);
+        }
     }
-   }
-   return ["date" => $date, "volume" => $highestvolume ];
+    return ["date" => $date, "volume" => $highestVolume];
 }
