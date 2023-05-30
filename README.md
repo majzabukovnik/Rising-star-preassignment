@@ -1,2 +1,2 @@
 # Rising star preassignment
- first prgram
+First program
