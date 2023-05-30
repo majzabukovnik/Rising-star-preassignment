@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/functions.php';
-
+$output = ['There was an error in your input!'];
 if (isset($_POST['start_d']) && validator()) {
     $output = [];
     $startValue = dateCalculator($_POST['start_d']);
